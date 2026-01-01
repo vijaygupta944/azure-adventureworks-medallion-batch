@@ -1,0 +1,27 @@
+{
+  "name": "DS_GITHUB_HTTP",
+  "properties": {
+    "description": "Parameterized HTTP dataset to read CSV files from GitHub RAW URLs.",
+    "linkedServiceName": {
+      "referenceName": "LS_GITHUB_HTTP",
+      "type": "LinkedServiceReference"
+    },
+    "parameters": {
+      "relative_url": {
+        "type": "String"
+      }
+    },
+    "type": "DelimitedText",
+    "typeProperties": {
+      "location": {
+        "type": "HttpServerLocation",
+        "relativeUrl": "@dataset().relative_url"
+      },
+      "columnDelimiter": ",",
+      "escapeChar": "\\",
+      "quoteChar": "\"",
+      "firstRowAsHeader": true
+    },
+    "schema": []
+  }
+}
