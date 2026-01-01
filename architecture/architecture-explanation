@@ -1,0 +1,154 @@
+A. This project implements a batch-only, enterprise-grade data analytics platform on Microsoft Azure, following the Medallion Architecture pattern (Bronze → Silver → Gold).
+
+B. The architecture is designed to:
+1. Ingest data from external HTTP sources (GitHub)
+2. Store raw and curated data in Azure Data Lake Storage Gen2
+3. Perform scalable transformations using Azure Databricks
+4. Serve analytics-ready data using Azure Synapse Analytics
+5. Enable business reporting through Power BI
+
+C. Key Design Principle: Lake-first, batch-only, metadata-driven analytics.
+
+D. High-Level Architecture Flow:
+
+GitHub (HTTP API)
+        ↓
+Azure Data Factory (Batch Orchestration)
+        ↓
+ADLS Gen2 – Bronze (Raw Data)
+        ↓
+Azure Databricks – Silver (Cleaned & Optimized)
+        ↓
+Azure Synapse Analytics – Gold (Analytics Layer)
+        ↓
+Power BI (Dashboards)
+
+
+E. Data Source Layer (GitHub – HTTP)
+- AdventureWorks sales data hosted on GitHub
+- Accessed using GitHub RAW HTTP URLs
+- CSV format
+- Batch ingestion (daily or on-demand)
+
+
+F. Orchestration Layer – Azure Data Factory (ADF)
+- Azure Data Factory acts as the central orchestrator of the platform.
+
+Key Responsibilities
+- Schedule batch pipelines
+- Ingest data from GitHub via HTTP
+- Land raw files into ADLS Bronze
+- Parameterize ingestion logic
+- Handle retries and failures
+
+G. Why Metadata-Driven?
+- File details stored in a control JSON
+- Adding new files requires no pipeline changes
+- Scalable and enterprise-friendly
+
+H. Bronze Layer – Raw Storage (ADLS Gen2)
+Purpose
+- Store raw, immutable source data.
+
+bronze/
+├── sales/
+│   ├── AdventureWorks_Sales_2015.csv
+│   ├── AdventureWorks_Sales_2016.csv
+│   ├── AdventureWorks_Sales_2017.csv
+│   └── AdventureWorks_Sales_2018.csv
+
+Why Keep Raw Data?
+- Safe rollback and reprocessing
+- Debugging source issues
+
+I. Silver Layer – Curated Data (Azure Databricks)
+Purpose
+- Clean, standardize, and optimize data
+- Apply data quality checks
+- Convert data to analytics-friendly format
+- Key Transformations
+- CSV → Parquet conversion
+- Data type casting
+- Null filtering
+- Derived columns (year, month)
+- Partitioning for performance
+
+J. Why Databricks?
+- Distributed processing with Spark
+- Better scalability than ADF Data Flows
+- Full control using PySpark
+
+silver/
+├── sales/
+│   ├── order_year=2015/
+│   ├── order_year=2016/
+│   ├── order_year=2017/
+│   └── order_year=2018/
+
+
+K. Design Rationale:
+- Early optimization reduces downstream query cost.
+
+L. Gold Layer – Analytics Layer (Azure Synapse)
+Purpose
+- Serve business-ready, reusable datasets
+- Optimize performance for BI tools
+- Serverless SQL Pool
+- Queries data directly from ADLS
+- No infrastructure management
+- Pay-per-query model
+- Abstraction Layer (Views)
+- Uses OPENROWSET() to query Silver Parquet files
+- Treats files as virtual tables
+- OPENROWSET() → Virtual Table
+- Materialization (CETAS)
+- Uses CREATE EXTERNAL TABLE AS SELECT
+- Physically writes curated data to Gold
+- Enables reuse and faster BI queries
+
+gold/
+└── sales/
+    └── *.parquet
+
+
+Key Insight:
+Views are logical; CETAS creates physical datasets.
+
+M. Security & Identity Design
+Authentication Methods
+1. ADF → ADLS	<=> Managed Identity
+2. Databricks → ADLS	<=> Service Principal
+3. Synapse → ADLS	<=> Managed Identity
+4. Power BI → Synapse	<=> SQL Authentication
+
+N. Why Identity-Based Access?
+- No secrets in code
+- Least privilege principle
+- Secure and production-ready
+
+O. Consumption Layer – Power BI
+Purpose
+- Provide insights to business users
+- Enable fast, interactive dashboards
+
+P. Connection
+- Uses Synapse SQL Endpoint
+- Reads Gold external tables
+
+
+Q. Key Architectural Principles
+- Medallion Architecture
+- Lake-first design
+- Metadata-driven ingestion
+- Idempotent processing
+- Cost-optimized analytics
+
+Summary:
+This architecture demonstrates how real enterprises build scalable, secure, and cost-efficient batch analytics platforms using Azure native services.
+
+End Result:
+A production-ready, batch-only analytics platform that supports reliable ingestion, scalable processing, and fast business insights.
+
+📌 Author
+
+Data Engineer | Azure | Big Data
