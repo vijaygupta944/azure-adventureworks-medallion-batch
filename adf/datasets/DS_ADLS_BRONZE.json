@@ -1,0 +1,32 @@
+{
+  "name": "DS_ADLS_BRONZE",
+  "properties": {
+    "description": "Parameterized ADLS Gen2 dataset to write raw CSV files into the Bronze layer.",
+    "linkedServiceName": {
+      "referenceName": "LS_ADLS_GEN2",
+      "type": "LinkedServiceReference"
+    },
+    "parameters": {
+      "folder_name": {
+        "type": "String"
+      },
+      "file_name": {
+        "type": "String"
+      }
+    },
+    "type": "DelimitedText",
+    "typeProperties": {
+      "location": {
+        "type": "AzureBlobFSLocation",
+        "fileSystem": "bronze",
+        "folderPath": "@dataset().folder_name",
+        "fileName": "@dataset().file_name"
+      },
+      "columnDelimiter": ",",
+      "escapeChar": "\\",
+      "quoteChar": "\"",
+      "firstRowAsHeader": true
+    },
+    "schema": []
+  }
+}
