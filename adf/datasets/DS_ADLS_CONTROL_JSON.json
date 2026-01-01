@@ -1,0 +1,20 @@
+{
+  "name": "DS_ADLS_CONTROL_JSON",
+  "properties": {
+    "description": "ADLS Gen2 JSON dataset used as a control file for metadata-driven ingestion.",
+    "linkedServiceName": {
+      "referenceName": "LS_ADLS_GEN2",
+      "type": "LinkedServiceReference"
+    },
+    "type": "Json",
+    "typeProperties": {
+      "location": {
+        "type": "AzureBlobFSLocation",
+        "fileSystem": "bronze",
+        "folderPath": "control",
+        "fileName": "file_metadata.json"
+      }
+    },
+    "schema": []
+  }
+}
