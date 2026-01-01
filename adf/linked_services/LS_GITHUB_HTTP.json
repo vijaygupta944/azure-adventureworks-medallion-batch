@@ -1,0 +1,15 @@
+{
+  "name": "LS_GITHUB_HTTP",
+  "properties": {
+    "description": "HTTP linked service to connect Azure Data Factory with GitHub RAW content.",
+    "type": "HttpServer",
+    "typeProperties": {
+      "url": "https://raw.githubusercontent.com",
+      "enableServerCertificateValidation": true
+    },
+    "connectVia": {
+      "referenceName": "AutoResolveIntegrationRuntime",
+      "type": "IntegrationRuntimeReference"
+    }
+  }
+}
