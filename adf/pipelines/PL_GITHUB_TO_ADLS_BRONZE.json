@@ -1,0 +1,93 @@
+{
+  "name": "PL_GITHUB_TO_ADLS_BRONZE",
+  "properties": {
+    "description": "Metadata-driven batch ingestion from GitHub (HTTP) to ADLS Bronze using Lookup, ForEach, and Copy activities.",
+    "activities": [
+      {
+        "name": "LK_READ_CONTROL_FILE",
+        "type": "Lookup",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 1,
+          "retryIntervalInSeconds": 30
+        },
+        "typeProperties": {
+          "source": {
+            "type": "JsonSource"
+          },
+          "dataset": {
+            "referenceName": "DS_ADLS_CONTROL_JSON",
+            "type": "DatasetReference"
+          },
+          "firstRowOnly": false
+        }
+      },
+      {
+        "name": "FE_FOR_EACH_FILE",
+        "type": "ForEach",
+        "dependsOn": [
+          {
+            "activity": "LK_READ_CONTROL_FILE",
+            "dependencyConditions": ["Succeeded"]
+          }
+        ],
+        "typeProperties": {
+          "items": "@activity('LK_READ_CONTROL_FILE').output.value",
+          "isSequential": false,
+          "activities": [
+            {
+              "name": "CP_GITHUB_TO_BRONZE",
+              "type": "Copy",
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 2,
+                "retryIntervalInSeconds": 30
+              },
+              "typeProperties": {
+                "source": {
+                  "type": "DelimitedTextSource",
+                  "storeSettings": {
+                    "type": "HttpReadSettings"
+                  }
+                },
+                "sink": {
+                  "type": "DelimitedTextSink",
+                  "storeSettings": {
+                    "type": "AzureBlobFSWriteSettings"
+                  }
+                }
+              },
+              "inputs": [
+                {
+                  "referenceName": "DS_GITHUB_HTTP",
+                  "type": "DatasetReference",
+                  "parameters": {
+                    "relative_url": "@item().relative_url"
+                  }
+                }
+              ],
+              "outputs": [
+                {
+                  "referenceName": "DS_ADLS_BRONZE",
+                  "type": "DatasetReference",
+                  "parameters": {
+                    "folder_name": "@item().folder_name",
+                    "file_name": "@item().file_name"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "annotations": [
+      "GitHub",
+      "HTTP",
+      "Batch",
+      "Bronze",
+      "MetadataDriven"
+    ]
+  }
+}
