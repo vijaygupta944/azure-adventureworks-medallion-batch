@@ -1,0 +1,22 @@
+[
+  {
+    "relative_url": "vijaygupta944/End_to_End_Project_ADF_ADLS_Databricks_Synapse_PowerBI/refs/heads/main/AdventureWorks_Sales_2015.csv",
+    "folder_name": "sales",
+    "file_name": "AdventureWorks_Sales_2015.csv"
+  },
+  {
+    "relative_url": "vijaygupta944/End_to_End_Project_ADF_ADLS_Databricks_Synapse_PowerBI/refs/heads/main/AdventureWorks_Sales_2016.csv",
+    "folder_name": "sales",
+    "file_name": "AdventureWorks_Sales_2016.csv"
+  },
+  {
+    "relative_url": "vijaygupta944/End_to_End_Project_ADF_ADLS_Databricks_Synapse_PowerBI/refs/heads/main/AdventureWorks_Sales_2017.csv",
+    "folder_name": "sales",
+    "file_name": "AdventureWorks_Sales_2017.csv"
+  },
+  {
+    "relative_url": "vijaygupta944/End_to_End_Project_ADF_ADLS_Databricks_Synapse_PowerBI/refs/heads/main/AdventureWorks_Sales_2018.csv",
+    "folder_name": "sales",
+    "file_name": "AdventureWorks_Sales_2018.csv"
+  }
+]
