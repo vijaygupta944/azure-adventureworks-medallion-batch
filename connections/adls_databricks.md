@@ -120,5 +120,7 @@ spark.read.csv(
   header=True
 )
 
+Conclusion:
+"Databricks accesses ADLS using a **Service Principal** via OAuth, providing secure, scalable, non-human authentication."
 
 
