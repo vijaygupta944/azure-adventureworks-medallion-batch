@@ -12,7 +12,7 @@ It focuses on **scalability, security, cost optimization, and reprocessing**, re
 
 ---
 
-## 🏗️ Architecture (High Level)
+## Architecture (High Level)
 
 ```
 GitHub (HTTP / CSV)
@@ -33,7 +33,7 @@ Power BI (Dashboards)
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 * **Orchestration:** Azure Data Factory
 * **Storage:** Azure Data Lake Storage Gen2
@@ -43,7 +43,7 @@ Power BI (Dashboards)
 
 ---
 
-## 🥉 Bronze Layer – Raw Ingestion
+## Bronze Layer – Raw Ingestion
 
 * Metadata-driven ingestion from GitHub (HTTP)
 * Immutable raw CSV files
@@ -54,7 +54,7 @@ Power BI (Dashboards)
 
 ---
 
-## 🧪 Silver Layer – Curated Data (Databricks)
+## Silver Layer – Curated Data (Databricks)
 
 * Schema enforcement & type casting
 * Data quality checks & quarantined rejects
@@ -68,7 +68,7 @@ Power BI (Dashboards)
 
 ---
 
-## 🥇 Gold Layer – Analytics (Synapse)
+## Gold Layer – Analytics (Synapse)
 
 * **Serverless SQL** (no infrastructure management)
 * `OPENROWSET()` views for abstraction
@@ -79,7 +79,7 @@ Power BI (Dashboards)
 
 ---
 
-## 📊 Power BI
+## Power BI
 
 * Connected to **Synapse SQL Endpoint**
 * Import mode for performance
@@ -88,7 +88,7 @@ Power BI (Dashboards)
 
 ---
 
-## 🔐 Security & Identity
+## Security & Identity
 
 | Service            | Authentication     |
 | ------------------ | ------------------ |
@@ -114,8 +114,7 @@ Power BI (Dashboards)
 
 ## Vijay Gupta
 
-**Azure Data Engineer | Batch Analytics | Big Data**
+**Azure Data Engineer | Big Data**
 
 ---
 
----
