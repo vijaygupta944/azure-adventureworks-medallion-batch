@@ -63,9 +63,6 @@ Power BI (Dashboards)
 * CSV → Parquet conversion
 * Partitioned by `order_year`
 
-✔ Idempotent & re-runnable
-✔ Cost-optimized for analytics
-
 ---
 
 ## Gold Layer – Analytics (Synapse)
@@ -74,8 +71,6 @@ Power BI (Dashboards)
 * `OPENROWSET()` views for abstraction
 * **CETAS** to materialize Gold data in ADLS
 * BI-ready external tables
-
-> *Views are logical; CETAS creates physical datasets.*
 
 ---
 
@@ -97,14 +92,14 @@ Power BI (Dashboards)
 | Synapse → ADLS     | Managed Identity   |
 | Power BI → Synapse | SQL Authentication |
 
-✔ No secrets in code
-✔ Enterprise-grade access control
+- No secrets in code
+- Enterprise-grade access control
 
 ---
 
 ## Repository Highlights
 
-* `adf/` → Metadata-driven pipelines
+* `adf/` → Metadata-driven & dynamic pipelines
 * `databricks/` → Advanced Silver processing notebooks
 * `synapse/` → Serverless SQL & CETAS scripts
 * `powerbi/` → BI dashboard
